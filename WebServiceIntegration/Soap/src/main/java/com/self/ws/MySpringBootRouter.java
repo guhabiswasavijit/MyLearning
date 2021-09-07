@@ -1,0 +1,51 @@
+package com.self.ws;
+
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.StandardCopyOption;
+
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
+import org.apache.camel.builder.RouteBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import com.self.wsIntegration.types.UploadRequest;
+
+@Component
+public class MySpringBootRouter extends RouteBuilder {
+	
+	private static String outputDirectory = "";
+	
+	@Value("${out.directory}")
+	public void setOutputDirectory(String t_outputDirectory){
+		outputDirectory = t_outputDirectory;
+	}
+
+    @Override
+    public void configure() {
+		/*
+		 * from("timer:hello?period={{timer.period}}").routeId("hello")
+		 * .transform().method("myBean", "saySomething")
+		 * .filter(simple("${body} contains 'foo'")) .to("log:foo") .end()
+		 * .to("stream:out");
+		 */
+        from("cxf:bean:cxfFileUploader?dataFormat=PAYLOAD&wsdlURL=WSIntegrationDemo.wsdl")
+        .process(new Processor() {
+			@Override
+			public void process(Exchange exchange) throws Exception {			
+				UploadRequest uploadRequest = exchange.getIn().getBody(UploadRequest.class);
+				String fileName = uploadRequest.getTitle();
+				StringBuilder filePath = new StringBuilder(outputDirectory);
+				filePath.append(fileName);
+				filePath.append(".csv");
+				File targetFile = new File(filePath.toString());
+				InputStream initialStream = uploadRequest.getFileData().getInputStream();
+				java.nio.file.Files.copy(initialStream, targetFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
+				initialStream.close();
+				
+			}        	
+        });
+    }
+
+}

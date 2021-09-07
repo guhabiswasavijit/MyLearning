@@ -1,0 +1,65 @@
+<wsdl:definitions
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:tns="http://wsintegration.com/services/fileUploader"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+	name="FileUploaderEndpointService"
+	targetNamespace="http://wsintegration.com/services/fileUploader">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+			<import
+				namespace="http://wsintegration.com/services/fileUploader"
+				schemaLocation="fileUploader.xsd" />
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="uploadFileRequest">
+		<wsdl:part element="tns:uploadRequest"
+			name="uploadFileRequest">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="uploadFileResponse">
+		<wsdl:part element="tns:uploadResonse"
+			name="uploadFileResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="fileUploadFault">
+		<wsdl:part name="uploadException"
+			element="tns:uploadException" />
+	</wsdl:message>
+	<wsdl:portType name="FileUploaderEndpoint">
+		<wsdl:operation name="UploadFile">
+			<wsdl:input message="tns:uploadFileRequest"
+				name="UploadFileRequest">
+			</wsdl:input>
+			<wsdl:output message="tns:uploadFileResponse"
+				name="UploadFileResponse">
+			</wsdl:output>
+			<wsdl:fault name="FileUploadFault"
+				message="tns:fileUploadFault" />
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding
+		name="FileUploaderEndpointServiceSoapBinding"
+		type="tns:FileUploaderEndpoint">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="UploadFile">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="UploadFileRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="UploadFileResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="FileUploaderEndpointService">
+		<wsdl:port
+			binding="tns:FileUploaderEndpointServiceSoapBinding"
+			name="FileUploaderEndpointPort">
+			<soap:address
+				location="http://wsintegration.com/services/fileUploader" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

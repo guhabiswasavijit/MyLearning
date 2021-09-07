@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://wsintegration.com/services/fileUploader"
+	xmlns:tns="http://mySelf.com/fileUploader"
+	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+	elementFormDefault="qualified">
+	<element name="uploadRequest">    
+	     <complexType>
+		      <sequence>
+		        <element name="title" type="string" />
+		        <element name="fileData" type="base64Binary" xmime:expectedContentTypes="application/octet-stream"/>
+		      </sequence>
+	    </complexType>
+    </element>
+    <element name="uploadResonse">    
+	     <complexType>
+		      <sequence>
+		        	<element name="success" type="boolean" />		        
+		      </sequence>
+	    </complexType>
+    </element>
+    <element name="uploadException">    
+	     <complexType>
+		      <sequence>
+		        	<element name="erorMsg" type="string" />		        
+		      </sequence>
+	    </complexType>
+    </element>
+</schema>
