@@ -1,0 +1,46 @@
+<?xml version = "1.0" encoding = "utf-8" ?>
+<description xmlns="http://www.w3.org/ns/wsdl"
+	targetNamespace="http://mySelf.com/fileUploader"
+	xmlns:tns="http://mySelf.com/fileUploader"
+	xmlns:stns="http://mySelf.com/fileUploader/schema"
+	xmlns:wsoap="http://www.w3.org/ns/wsdl/soap"
+	xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
+	xmlns:wsdlx="http://www.w3.org/ns/wsdl-extensions">
+
+	<documentation>
+		This document describes File Uploader Service. 
+	</documentation>
+
+	<types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://mySelf.com/fileUploader/schema" schemaLocation="fileUploader.xsd" />             
+        </schema>
+	</types>
+
+	<interface name="fileUploaderInterface">
+		<fault name="dataFault" element="stns:dataError" />
+		<operation name="uploadFileOp"
+			pattern="http://www.w3.org/ns/wsdl/in-out"
+			style=" http://www.w3.org/ns/wsdl/style/iri" wsdlx:safe="true">
+			<input messageLabel="In" element="stns:uploadRequest" />
+			<output messageLabel="Out"
+				element="stns:uploadResonse" />
+			<outfault messageLabel="Out" ref="stns:uploadException" />
+		</operation>
+	</interface>
+
+	<binding name="fileUploaderServiceInterfaceSOAPBinding"
+		interface="tns:fileUploaderInterface"
+		type="http://www.w3.org/ns/wsdl/soap"
+		wsoap:protocol="http://www.w3.org/2003/05/soap/bindings/HTTP/">
+		<operation ref="tns:uploadFileOp"
+			wsoap:mep="http://www.w3.org/2003/05/soap/mep/soap-response" />
+		<fault ref="tns:uploadException" wsoap:code="soap:Sender" />
+	</binding>
+
+	<service name="fileUploader" interface="tns:fileUploaderInterface">
+		<endpoint name="fileUploaderEndpoint"
+			binding="tns:fileUploaderInterfaceSOAPBinding"
+			address="http://mySelf.com/fileUploader" />
+	</service>
+</description>

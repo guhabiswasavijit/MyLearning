@@ -1,0 +1,8 @@
+com\self\wsIntegration\types\UploadException.class
+com\wsintegration\services\fileuploader\FileUploaderEndpointService.class
+com\self\wsIntegration\types\UploadRequest.class
+com\wsintegration\services\fileuploader\FileUploadFault.class
+com\self\wsIntegration\types\ObjectFactory.class
+com\wsintegration\services\fileuploader\FileUploaderEndpoint.class
+com\self\wsIntegration\types\package-info.class
+com\self\wsIntegration\types\UploadResonse.class

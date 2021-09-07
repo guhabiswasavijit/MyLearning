@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>WebServiceIntegartion</groupId>
+	<artifactId>wsArtifacts</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>8</maven.compiler.source>
+		<maven.compiler.target>8</maven.compiler.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>2.5.4</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>fileUploader.xsd</exclude>
+					<exclude>*.wsdl</exclude>
+					<exclude>jaxbBinding.xjb</exclude>
+				</excludes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin><!-- Use latest to build recent Java applications -->
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.1</version>
+			</plugin>
+			<!-- <plugin> <groupId>org.jvnet.jaxb2.maven2</groupId> <artifactId>maven-jaxb2-plugin</artifactId> 
+				<executions> <execution> <id>generate</id> <goals> <goal>generate</goal> 
+				</goals> <configuration> <strict>false</strict> <schemaIncludes /> <schemas> 
+				<schema> <fileset> <includes> <include>fileUploader.xsd</include> </includes> 
+				</fileset> </schema> </schemas> <xjbSources> <xjbSource>jaxbBinding.xjb</xjbSource> 
+				</xjbSources> </configuration> </execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/WSIntegrationDemo.wsdl</wsdl>
+								</wsdlOption>
+							</wsdlOptions>
+							<defaultOptions>
+								<bindingFiles>
+									<bindingFile>${basedir}/src/main/resources/jaxbbinding.xjb</bindingFile>
+								</bindingFiles>
+								<noAddressBinding>true</noAddressBinding>
+							</defaultOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
