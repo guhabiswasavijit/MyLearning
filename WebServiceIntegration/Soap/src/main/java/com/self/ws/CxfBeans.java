@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.camel.component.cxf.CxfEndpoint;
-import org.apache.camel.component.servlet.CamelHttpTransportServlet;
+import org.apache.cxf.bus.spring.SpringBus;
+import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -25,6 +26,11 @@ public class CxfBeans {
 	@Value("${endpoint.url}")
 	private String endPointUrl;
 	
+	@Bean
+	public SpringBus cxf() {        
+	    return new SpringBus();
+	}
+	
 	
 	@Bean(name = "cxfFileUploader")
 	public CxfEndpoint buildCxfEndpoint() {
@@ -40,8 +46,8 @@ public class CxfBeans {
 	@Bean
 	ServletRegistrationBean servletRegistrationBean() {
 	    ServletRegistrationBean servlet = new ServletRegistrationBean
-	      (new CamelHttpTransportServlet(), contextPath+"/*");
-	    servlet.setName("CamelServlet");
+	      (new CXFServlet(), contextPath+"/*");
+	    servlet.setName("dispatcher");
 	    return servlet;
 	}
 	
