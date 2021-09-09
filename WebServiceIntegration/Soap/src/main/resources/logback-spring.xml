@@ -37,7 +37,7 @@
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>
-    <logger name="org.apache.camel" additivity="false">
+    <logger name="com.self.ws" additivity="false">
         <level value="DEBUG" />
         <appender-ref ref="RollingFile" />
     </logger>

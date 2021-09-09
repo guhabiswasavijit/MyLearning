@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.StandardCopyOption;
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ public class MySpringBootRouter extends RouteBuilder {
     @Override
     public void configure() {
         from("cxf:bean:cxfFileUploader?dataFormat=PAYLOAD&wsdlURL=WSIntegrationDemo.wsdl")
+        .log(LoggingLevel.DEBUG, "About to Write file to:"+outputDirectory)
         .process(new Processor() {
 			@Override
 			public void process(Exchange exchange) throws Exception {
@@ -44,7 +46,7 @@ public class MySpringBootRouter extends RouteBuilder {
 				initialStream.close();
 				
 			}        	
-        });
+        }).log("Writing file to:"+outputDirectory);
     }
 
 }
