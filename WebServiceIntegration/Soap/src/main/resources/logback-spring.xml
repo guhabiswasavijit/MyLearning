@@ -37,11 +37,9 @@
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </root>
-
-    <!-- LOG "com.baeldung*" at TRACE level -->
-    <logger name="com.baeldung" level="trace" additivity="false">
+    <logger name="org.apache.camel" additivity="false">
+        <level value="DEBUG" />
         <appender-ref ref="RollingFile" />
-        <appender-ref ref="Console" />
     </logger>
 
 </configuration>
