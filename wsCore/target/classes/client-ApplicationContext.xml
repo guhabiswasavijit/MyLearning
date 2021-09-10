@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+<bean id="logOutBound" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+ 
+ <jaxws:client id="fileUploaderServiceClient"
+               serviceClass="com.wsintegration.services.fileuploader.FileUploaderEndpoint"
+               address="http://localhost:8081/services/fileUploader">   
+     <jaxws:outInterceptors>
+        <ref bean="logOutBound" />
+    </jaxws:outInterceptors>
+           	  
+ </jaxws:client>
+             	  
+</beans>
