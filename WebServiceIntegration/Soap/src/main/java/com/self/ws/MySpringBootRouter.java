@@ -3,13 +3,21 @@ package com.self.ws;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.StandardCopyOption;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.cxf.DataFormat;
+import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.self.wsIntegration.types.UploadRequest;
+import com.self.wsIntegration.types.UploadResonse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +35,22 @@ public class MySpringBootRouter extends RouteBuilder {
 
     @Override
     public void configure() {
+    	JaxbDataFormat requestDataFormat = new JaxbDataFormat();
+    	JaxbDataFormat responseDataFormat = new JaxbDataFormat();
+		JAXBContext requestContext = null;
+		JAXBContext responseContext = null;
+		try {
+			requestContext = JAXBContext.newInstance(UploadRequest.class);
+			responseContext = JAXBContext.newInstance(UploadResonse.class);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		requestDataFormat.setContext(requestContext);
+		responseDataFormat.setContext(responseContext);
         from("cxf:bean:cxfFileUploader?dataFormat=PAYLOAD&wsdlURL=WSIntegrationDemo.wsdl")
         .log(LoggingLevel.DEBUG, "About to Write file to:"+outputDirectory)
+        .unmarshal(requestDataFormat)
         .process(new Processor() {
 			@Override
 			public void process(Exchange exchange) throws Exception {
@@ -44,9 +66,10 @@ public class MySpringBootRouter extends RouteBuilder {
 				java.nio.file.Files.copy(initialStream, targetFile.toPath(),StandardCopyOption.REPLACE_EXISTING);
 				LOG.debug("Copy file Successful");
 				initialStream.close();
-				
 			}        	
-        }).log("Writing file to:"+outputDirectory);
+        }).log("Writing file to:"+outputDirectory)
+        .to("bean:wsSuccessResponseBuilder?method=buildResponse")
+        .marshal(responseDataFormat);
     }
 
 }
