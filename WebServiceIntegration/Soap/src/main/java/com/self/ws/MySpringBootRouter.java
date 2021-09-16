@@ -11,17 +11,15 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.cxf.DataFormat;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.self.wsIntegration.types.UploadRequest;
 import com.self.wsIntegration.types.UploadResonse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-@Component
+//@Component
 public class MySpringBootRouter extends RouteBuilder {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(MySpringBootRouter.class);

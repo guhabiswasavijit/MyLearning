@@ -1,8 +1,10 @@
 package com.self.ws;
 
-import java.io.File;
-import java.io.InputStream;
-import java.nio.file.StandardCopyOption;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -13,13 +15,12 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
-import org.apache.camel.model.dataformat.CsvDataFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import org.springframework.stereotype.Component;
 import com.self.wsIntegration.types.UploadRequest;
 import com.self.wsIntegration.types.UploadResonse;
-
+@Component
 public class FileUploadRouter extends RouteBuilder {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FileUploadRouter.class);
@@ -51,12 +52,21 @@ public class FileUploadRouter extends RouteBuilder {
 				UploadRequest uploadRequest = exchange.getIn().getBody(UploadRequest.class);
 				String fileName = uploadRequest.getTitle();
 				LOG.debug("Processing file:{}",fileName);
-				exchange.getIn().setBody(uploadRequest.getFileData());
+				
 				LOG.debug("Copy file Successful");
+				StringBuilder textBuilder = new StringBuilder();
+			    try (Reader reader = new BufferedReader(new InputStreamReader
+			      (uploadRequest.getFileData().getInputStream(), Charset.forName(StandardCharsets.UTF_8.name())))) {
+			        int c = 0;
+			        while ((c = reader.read()) != -1) {
+			            textBuilder.append((char) c);
+			        }
+			    }
+			    exchange.getIn().setBody(textBuilder.toString());
 			}        	
         }).log("About to process file :"+body())
 		.split(body().tokenize("/n"))
-		.streaming().unmarshal(bindy)
+		.unmarshal(bindy)
 		.log("Finished Transformation:"+body()).end();
 
 	}
