@@ -8,6 +8,14 @@
   <classpathentry kind="var" path="M2_REPO/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3.jar" sourcepath="M2_REPO/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1/activation-1.1.jar" sourcepath="M2_REPO/javax/activation/activation/1.1/activation-1.1-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+  <classpathentry kind="var" path="M2_REPO/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar" sourcepath="M2_REPO/org/projectlombok/lombok/1.18.20/lombok-1.18.20-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-bindy/3.11.1/camel-bindy-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-bindy/3.11.1/camel-bindy-3.11.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-support/3.11.1/camel-support-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-support/3.11.1/camel-support-3.11.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-api/3.11.1/camel-api-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-api/3.11.1/camel-api-3.11.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-util/3.11.1/camel-util-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-util/3.11.1/camel-util-3.11.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-management-api/3.11.1/camel-management-api-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-management-api/3.11.1/camel-management-api-3.11.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/ibm/icu/icu4j/69.1/icu4j-69.1.jar" sourcepath="M2_REPO/com/ibm/icu/icu4j/69.1/icu4j-69.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-test/2.5.4/spring-boot-starter-test-2.5.4.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-test/2.5.4/spring-boot-starter-test-2.5.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter/2.5.4/spring-boot-starter-2.5.4.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter/2.5.4/spring-boot-starter-2.5.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot/2.5.3/spring-boot-2.5.3.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot/2.5.3/spring-boot-2.5.3-sources.jar"/>
@@ -21,7 +29,6 @@
   <classpathentry kind="var" path="M2_REPO/org/springframework/boot/spring-boot-starter-logging/2.5.3/spring-boot-starter-logging-2.5.3.jar" sourcepath="M2_REPO/org/springframework/boot/spring-boot-starter-logging/2.5.3/spring-boot-starter-logging-2.5.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-classic/1.2.4/logback-classic-1.2.4.jar" sourcepath="M2_REPO/ch/qos/logback/logback-classic/1.2.4/logback-classic-1.2.4-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/ch/qos/logback/logback-core/1.2.4/logback-core-1.2.4.jar" sourcepath="M2_REPO/ch/qos/logback/logback-core/1.2.4/logback-core-1.2.4-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/logging/log4j/log4j-to-slf4j/2.14.1/log4j-to-slf4j-2.14.1.jar" sourcepath="M2_REPO/org/apache/logging/log4j/log4j-to-slf4j/2.14.1/log4j-to-slf4j-2.14.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/logging/log4j/log4j-api/2.14.1/log4j-api-2.14.1.jar" sourcepath="M2_REPO/org/apache/logging/log4j/log4j-api/2.14.1/log4j-api-2.14.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/slf4j/jul-to-slf4j/1.7.32/jul-to-slf4j-1.7.32.jar" sourcepath="M2_REPO/org/slf4j/jul-to-slf4j/1.7.32/jul-to-slf4j-1.7.32-sources.jar"/>
@@ -58,12 +65,8 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/springboot/camel-spring-boot/3.11.1/camel-spring-boot-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/springboot/camel-spring-boot/3.11.1/camel-spring-boot-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-spring/3.11.1/camel-spring-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-spring/3.11.1/camel-spring-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-core-engine/3.11.1/camel-core-engine-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-core-engine/3.11.1/camel-core-engine-3.11.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-api/3.11.1/camel-api-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-api/3.11.1/camel-api-3.11.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-util/3.11.1/camel-util-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-util/3.11.1/camel-util-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-base-engine/3.11.1/camel-base-engine-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-base-engine/3.11.1/camel-base-engine-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-base/3.11.1/camel-base-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-base/3.11.1/camel-base-3.11.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-management-api/3.11.1/camel-management-api-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-management-api/3.11.1/camel-management-api-3.11.1-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-support/3.11.1/camel-support-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-support/3.11.1/camel-support-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-core-reifier/3.11.1/camel-core-reifier-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-core-reifier/3.11.1/camel-core-reifier-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-core-model/3.11.1/camel-core-model-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-core-model/3.11.1/camel-core-model-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-core-processor/3.11.1/camel-core-processor-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-core-processor/3.11.1/camel-core-processor-3.11.1-sources.jar"/>
