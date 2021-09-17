@@ -18,6 +18,8 @@ import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.ctc.wstx.exc.WstxUnexpectedCharException;
 import com.self.wsIntegration.types.UploadRequest;
 import com.self.wsIntegration.types.UploadResonse;
 @Component
@@ -27,6 +29,13 @@ public class FileUploadRouter extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
+		
+		onException(WstxUnexpectedCharException.class).process(new Processor() {
+            public void process(Exchange exchange) throws Exception {
+            	LOG.debug("Got error at:"+body());
+            }
+        }).log("Handled error").handled(true);
+		
 		BindyCsvDataFormat bindy = new BindyCsvDataFormat(EmployeeRecord.class);
 
 		JaxbDataFormat requestDataFormat = new JaxbDataFormat();
@@ -36,9 +45,8 @@ public class FileUploadRouter extends RouteBuilder {
 		try {
 			requestContext = JAXBContext.newInstance(UploadRequest.class);
 			responseContext = JAXBContext.newInstance(UploadResonse.class);
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JAXBException ex) {
+			LOG.error("Exception occured:",ex);
 		}
 		requestDataFormat.setContext(requestContext);
 		responseDataFormat.setContext(responseContext);
@@ -67,7 +75,10 @@ public class FileUploadRouter extends RouteBuilder {
         }).log("About to process file :"+body())
 		.split(body().tokenize("/n"))
 		.unmarshal(bindy)
-		.log("Finished Transformation:"+body()).end();
+		.log("Finished Transformation:"+body())
+		.end()
+		.to("bean:wsSuccessResponseBuilder?method=buildResponse")
+        .marshal(responseDataFormat);;
 
 	}
 }
