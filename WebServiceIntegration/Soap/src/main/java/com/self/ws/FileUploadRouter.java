@@ -76,6 +76,7 @@ public class FileUploadRouter extends RouteBuilder {
 		.split(body().tokenize("/n"))
 		.unmarshal(bindy)
 		.log("Finished Transformation:"+body())
+		.to("mongodb:mongo?collection=EmployeeCollection&operation=insert")
 		.end()
 		.to("bean:wsSuccessResponseBuilder?method=buildResponse")
         .marshal(responseDataFormat);;
