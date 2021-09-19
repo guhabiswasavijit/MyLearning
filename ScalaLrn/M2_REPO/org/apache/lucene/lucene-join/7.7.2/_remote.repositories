@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun Apr 12 21:19:45 IST 2020
+lucene-join-7.7.2-sources.jar>central=
+lucene-join-7.7.2.pom>central=
+lucene-join-7.7.2.jar>central=
