@@ -31,7 +31,7 @@ public class EmployeeRecord implements Serializable{
 	private String jobId;
 	@DataField(pos = 8, required = true)
 	private String salary;
-	@DataField(pos = 9, required = false)
+	@DataField(pos = 9, required = true) 
 	private String commisionPct;
 	@DataField(pos = 10, required = false)
 	private String managerId;

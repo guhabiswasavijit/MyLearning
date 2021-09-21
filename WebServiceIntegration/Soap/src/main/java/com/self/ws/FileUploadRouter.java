@@ -13,13 +13,13 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.jackson.JacksonDataFormat;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.ctc.wstx.exc.WstxUnexpectedCharException;
 import com.self.wsIntegration.types.UploadRequest;
 import com.self.wsIntegration.types.UploadResonse;
 @Component
@@ -29,12 +29,17 @@ public class FileUploadRouter extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
-		
-		onException(WstxUnexpectedCharException.class).process(new Processor() {
+		JacksonDataFormat jsonDataFormat = new JacksonDataFormat(EmployeeRecord.class);
+		onException(Exception.class).process(new Processor() {
             public void process(Exchange exchange) throws Exception {
             	LOG.debug("Got error at:"+body());
             }
-        }).log("Handled error").handled(true);
+        })
+		.log("Handled error")
+		.handled(true)
+		.marshal(jsonDataFormat)
+		.setHeader("CamelRabbitmqRoutingKey", constant("{{camel.rabbitmq.routingKey}}"))
+		.to("rabbitmq:{{camel.rabbitmq.exchange}}?connectionFactory=#rabbitConnectionFactory&autoDelete=false").end();
 		
 		BindyCsvDataFormat bindy = new BindyCsvDataFormat(EmployeeRecord.class);
 
@@ -76,7 +81,7 @@ public class FileUploadRouter extends RouteBuilder {
 		.split(body().tokenize("/n"))
 		.unmarshal(bindy)
 		.log("Finished Transformation:"+body())
-		.to("mongodb:mongo?collection=EmployeeCollection&operation=insert")
+		.to("mongodb:mongo?collection=EmployeeCollection&operation=insert&database=EmployeeDatabase")
 		.end()
 		.to("bean:wsSuccessResponseBuilder?method=buildResponse")
         .marshal(responseDataFormat);;
