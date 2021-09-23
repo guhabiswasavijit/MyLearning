@@ -29,19 +29,25 @@ public class FileUploadRouter extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
+		/*
 		JacksonDataFormat jsonDataFormat = new JacksonDataFormat(EmployeeRecord.class);
 		onException(Exception.class).process(new Processor() {
             public void process(Exchange exchange) throws Exception {
-            	LOG.debug("Got error at:"+body());
+            	String body = exchange.getIn().getBody(String.class);
+            	LOG.debug("Got error at:"+body);
+            	Throwable caused = exchange.getProperty(Exchange.EXCEPTION_CAUGHT, Throwable.class);
+            	caused.printStackTrace();
             }
         })
 		.log("Handled error")
-		.handled(true)
+		.continued(true)
 		.marshal(jsonDataFormat)
 		.setHeader("CamelRabbitmqRoutingKey", constant("{{camel.rabbitmq.routingKey}}"))
-		.to("rabbitmq:{{camel.rabbitmq.exchange}}?connectionFactory=#rabbitConnectionFactory&autoDelete=false").end();
+		.to("rabbitmq:{{camel.rabbitmq.exchange}}?connectionFactory=#rabbitConnectionFactory&autoDelete=false");*/
 		
-		BindyCsvDataFormat bindy = new BindyCsvDataFormat(EmployeeRecord.class);
+		from("direct:log").log("Fatal Exception Occure").stop();
+		
+		BindyCsvDataFormatWrapper bindy = new BindyCsvDataFormatWrapper(EmployeeRecord.class);
 
 		JaxbDataFormat requestDataFormat = new JaxbDataFormat();
     	JaxbDataFormat responseDataFormat = new JaxbDataFormat();
@@ -79,9 +85,13 @@ public class FileUploadRouter extends RouteBuilder {
 			}        	
         }).log("About to process file :"+body())
 		.split(body().tokenize("/n"))
-		.unmarshal(bindy)
-		.log("Finished Transformation:"+body())
-		.to("mongodb:mongo?collection=EmployeeCollection&operation=insert&database=EmployeeDatabase")
+			.streaming()
+			.unmarshal(bindy)
+			.log("Finished Transformation:"+body())
+			.choice()
+			   .when(body().isNotNull()).to("mongodb:mongo?collection=EmployeeCollection&operation=insert&database=EmployeeDatabase")
+			   .otherwise().log("Got body:"+body()).to("direct:log")
+			.endChoice()		
 		.end()
 		.to("bean:wsSuccessResponseBuilder?method=buildResponse")
         .marshal(responseDataFormat);;
