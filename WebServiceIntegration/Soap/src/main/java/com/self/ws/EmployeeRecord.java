@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@CsvRecord(separator = "\\,",skipFirstLine = true)
+@CsvRecord(separator = "\\,")
 @Getter @Setter @NoArgsConstructor
 public class EmployeeRecord implements Serializable{
 	

@@ -46,8 +46,18 @@ public class FileUploadRouter extends RouteBuilder {
 		.to("rabbitmq:{{camel.rabbitmq.exchange}}?connectionFactory=#rabbitConnectionFactory&autoDelete=false");*/
 		
 		from("direct:log").log("Fatal Exception Occure").stop();
+		BindyCsvDataFormat bindy = new BindyCsvDataFormat(EmployeeRecord.class);
+		from("direct:split")
+		  .log("Split line ${body}")
+		  .unmarshal(bindy)
+		  .log("Finished Transformation:"+body())
+			.choice()
+			   .when(body().isNotEqualTo("Failed")).to("mongodb:mongo?collection=EmployeeCollection&operation=insert&database=EmployeeDatabase")
+			   .otherwise().log("Got body:"+body()).to("direct:log")
+			.endChoice()		
+	    .end();
 		
-		BindyCsvDataFormatWrapper bindy = new BindyCsvDataFormatWrapper(EmployeeRecord.class);
+		
 
 		JaxbDataFormat requestDataFormat = new JaxbDataFormat();
     	JaxbDataFormat responseDataFormat = new JaxbDataFormat();
@@ -84,17 +94,9 @@ public class FileUploadRouter extends RouteBuilder {
 			    exchange.getIn().setBody(textBuilder.toString());
 			}        	
         }).log("About to process file :"+body())
-		.split(body().tokenize("/n"))
-			.streaming()
-			.unmarshal(bindy)
-			.log("Finished Transformation:"+body())
-			.choice()
-			   .when(body().isNotNull()).to("mongodb:mongo?collection=EmployeeCollection&operation=insert&database=EmployeeDatabase")
-			   .otherwise().log("Got body:"+body()).to("direct:log")
-			.endChoice()		
-		.end()
+        .split(method(new SplitWithNewLine(),"splitRecords"),new DataAggregationStrategy()).to("direct:split").end()	
 		.to("bean:wsSuccessResponseBuilder?method=buildResponse")
-        .marshal(responseDataFormat);;
+        .marshal(responseDataFormat);
 
 	}
 }
