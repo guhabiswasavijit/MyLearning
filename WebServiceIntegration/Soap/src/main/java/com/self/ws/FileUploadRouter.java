@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 
 import com.self.wsIntegration.types.UploadRequest;
 import com.self.wsIntegration.types.UploadResonse;
-@Component
+//@Component
 public class FileUploadRouter extends RouteBuilder {
 
 	private static final Logger LOG = LoggerFactory.getLogger(FileUploadRouter.class);
