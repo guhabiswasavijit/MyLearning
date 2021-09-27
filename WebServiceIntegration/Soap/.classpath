@@ -8,8 +8,9 @@
   <classpathentry kind="var" path="M2_REPO/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3.jar" sourcepath="M2_REPO/javax/servlet/jsp/javax.servlet.jsp-api/2.3.3/javax.servlet.jsp-api-2.3.3-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/javax/activation/activation/1.1/activation-1.1.jar" sourcepath="M2_REPO/javax/activation/activation/1.1/activation-1.1-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-  <classpathentry kind="var" path="M2_REPO/com/rabbitmq/amqp-client/5.13.1/amqp-client-5.13.1.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.31/slf4j-api-1.7.31.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.8.8/gson-2.8.8.jar" sourcepath="M2_REPO/com/google/code/gson/gson/2.8.8/gson-2.8.8-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/rabbitmq/amqp-client/5.13.1/amqp-client-5.13.1.jar" sourcepath="M2_REPO/com/rabbitmq/amqp-client/5.13.1/amqp-client-5.13.1-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/slf4j/slf4j-api/1.7.31/slf4j-api-1.7.31.jar" sourcepath="M2_REPO/org/slf4j/slf4j-api/1.7.31/slf4j-api-1.7.31-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-rabbitmq/3.11.1/camel-rabbitmq-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-rabbitmq/3.11.1/camel-rabbitmq-3.11.1-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-pool/commons-pool/1.6/commons-pool-1.6.jar" sourcepath="M2_REPO/commons-pool/commons-pool/1.6/commons-pool-1.6-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/camel/camel-support/3.11.1/camel-support-3.11.1.jar" sourcepath="M2_REPO/org/apache/camel/camel-support/3.11.1/camel-support-3.11.1-sources.jar"/>

@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.dataformat.bindy.csv.BindyCsvDataFormat;
@@ -13,6 +12,8 @@ import org.apache.camel.spi.DataFormat;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 
 public class BindyCsvDataFormatWrapper implements DataFormat {
 
@@ -56,6 +57,13 @@ public class BindyCsvDataFormatWrapper implements DataFormat {
 			ex.printStackTrace(pw);
 			LOG.error("Fatal Exception:{}",sw);
 			LOG.debug("Exception body:{}",result);
+			exchange.setProperty("ExchangeFailed",true);
+			String[] data = result.split(",");
+			ErrorDataBean error = new ErrorDataBean();
+			error.setErrorMessage(sw.toString());
+			error.setFailed(true);
+			error.setRecordNo(data[0]);
+			tranformedObject = error;
 		}
 		return tranformedObject;
 	}
