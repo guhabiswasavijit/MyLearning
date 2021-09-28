@@ -17,6 +17,8 @@ public class RabbitMqConfiguration {
     private Integer port;
 	@Value("${spring.rabbitmq.username}")
 	private String userName;
+	@Value("${camel.rabbitmq.vhost}")
+	private String vHost;
 	
 	@Bean(name = "rabbitConnectionFactory")
 	public ConnectionFactory buildRabbitConnectionFactory() {
@@ -25,6 +27,7 @@ public class RabbitMqConfiguration {
 		connFactory.setPort(port);
 		connFactory.setUsername(userName);
 		connFactory.setPassword(password);
+		connFactory.setVirtualHost(vHost);
 		return connFactory;
 	}
 
