@@ -41,5 +41,9 @@
         <level value="DEBUG" />
         <appender-ref ref="RollingFile" />
     </logger>
+     <logger name="org.apache.camel.impl" additivity="false">
+        <level value="DEBUG" />
+        <appender-ref ref="RollingFile" />
+    </logger>
 
 </configuration>
