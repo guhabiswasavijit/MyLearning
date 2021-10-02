@@ -14,7 +14,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.component.rabbitmq.RabbitMQConstants;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,8 +39,7 @@ public class FileUploadRabbitMQRouter extends RouteBuilder {
         })
 		.log("Handled error")
 		.handled(true)
-		.setHeader(RabbitMQConstants.ROUTING_KEY,simple("${properties:camel.rabbitmq.routingKey}"))
-		.to("rabbitmq:{{camel.rabbitmq.exchange}}?connectionFactory=#rabbitConnectionFactory&autoDelete=false&queue={{camel.rabbitmq.queue}}");
+		.to("bean:wsLogRabbitMq?method=send");
 		
 		from("direct:log").log("Fatal Exception Occure").stop();
 		BindyCsvDataFormatWrapper bindy = new BindyCsvDataFormatWrapper(EmployeeRecord.class);
@@ -52,8 +50,7 @@ public class FileUploadRabbitMQRouter extends RouteBuilder {
 		  .choice()
 		   	.when(simple("${exchangeProperty.ExchangeFailed}"))
 		   	.marshal(json).log("Got Error body:"+body())
-		   	.setHeader(RabbitMQConstants.ROUTING_KEY,simple("${properties:camel.rabbitmq.routingKey}"))
-		   	.to("rabbitmq:{{camel.rabbitmq.exchange}}?connectionFactory=#rabbitConnectionFactory&autoDelete=false&queue={{camel.rabbitmq.queue}}")
+		   	.to("bean:wsLogRabbitMq?method=send")
 		   	.otherwise().log("Got body:"+body()).to("mongodb:mongo?collection=EmployeeCollection&operation=insert&database=EmployeeDatabase")
 		  .endChoice()
 	    .end();
